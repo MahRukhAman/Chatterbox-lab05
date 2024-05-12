@@ -1,4 +1,4 @@
-package Chatterbox;
+package Networking;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class NanoHttpServer {
         if (args.length > 0)
             port = Integer.parseInt(args[0]);
 
-        NanoHttpServer server = new NanoHttpServer();
+        Chatterbox.NanoHttpServer server = new Chatterbox.NanoHttpServer();
         server.listen(port);
     }
 
@@ -46,7 +46,7 @@ public class NanoHttpServer {
                     String message = reader.readLine();
                     if (message != null)
                         System.out.println("Server received message - Client said: " + message);
-                        writer.write(message.toUpperCase());
+                    writer.write(message.toUpperCase());
                 } catch (Exception e) {
                     System.out.println("Caught Exception in While Loop:");
                     throw e;
