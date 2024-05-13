@@ -1,41 +1,64 @@
 package Networking;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Client {
-    private int port;
-    private String host;
-    private static BufferedReader in;
-    private final String serverAddress;
-    private final int serverPort;
+    private final String host;
+    private final int port;
+    private BufferedReader bufferedReader;
+    private PrintWriter printWriter;
+    private Socket socket;
 
-    public Client(String serverAddress, int serverPort) {
-        this.serverAddress = serverAddress;
-        this.serverPort = serverPort;
+    public Client(String host, int port) {
+        this.host = host;
+        this.port = port;
     }
-
-    public void connectToServer() {
-        try (Socket socket = new Socket(serverAddress, serverPort);
-             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true)) {
-
-            writer.println("Hello, server!");
-
-        } catch (IOException e) {
-            System.err.println("Error connecting to server: " + e.getMessage());
-            e.printStackTrace(); // Print stack trace for detailed error information
-        }
-    }
-
 
     public static void main(String[] args) {
-        String serverAddress = "localhost";
-        int serverPort = 8000;
-        if (args.length > 0) {
-            serverAddress = args[0];
-            serverPort = Integer.parseInt(args[1]);
+        Client client = new Client("localhost", 8000);
+        client.start(); // Call start method here
+
+        System.out.println("Please enter text:");
+
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            String message = scanner.nextLine();
+            client.writeMessage(message);
+            client.readMessage();
         }
-        Client client = new Client(serverAddress, serverPort);
-        client.connectToServer();
+}
+
+    private void start() {
+        try {
+            socket = new Socket(host, port);
+            bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            printWriter = new PrintWriter(socket.getOutputStream(), true);
+            System.out.println("Socket and streams initialized successfully.");
+        } catch (IOException e) {
+            System.err.println("Error initializing socket and streams: " + e.getMessage());
+        }
+    }
+
+    private void writeMessage(String message) {
+        if (printWriter != null) {
+            printWriter.println(message);
+            printWriter.flush();
+        }
+    }
+
+    private void readMessage() {
+        try {
+            String receivedMessage = bufferedReader.readLine();
+            if (receivedMessage != null) {
+                System.out.println("Server response: " + receivedMessage);
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading from server: " + e.getMessage());
+        }
     }
 }

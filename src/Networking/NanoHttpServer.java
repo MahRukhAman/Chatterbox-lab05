@@ -21,12 +21,7 @@ import java.util.Scanner;
 public class NanoHttpServer {
 
     public static void main(String[] args) throws IOException {
-        int port = 8000;
-        if (args.length > 0)
-            port = Integer.parseInt(args[0]);
-
-        ChatterboxServer.NanoHttpServer server = new ChatterboxServer.NanoHttpServer();
-        server.listen(port);
+        ChatterboxServer.NanoHttpServer.main(args);
     }
 
     public void listen(int port) throws IOException {

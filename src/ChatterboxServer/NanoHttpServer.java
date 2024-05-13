@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * This example was taken from the Chapter "Netzwerkprogrammierung" of the Book
@@ -24,7 +25,7 @@ public class NanoHttpServer {
         if (args.length > 0)
             port = Integer.parseInt(args[0]);
 
-        NanoHttpServer server = new NanoHttpServer();
+        ChatterboxServer.NanoHttpServer server = new ChatterboxServer.NanoHttpServer();
         server.listen(port);
     }
 
@@ -39,19 +40,18 @@ public class NanoHttpServer {
                      OutputStream output = socket.getOutputStream();
                      PrintWriter writer = new PrintWriter(
                              new OutputStreamWriter(output))
-
                 ) {
-                    System.out.println("-------------------- request from "
-                            + socket.getRemoteSocketAddress());
+                    System.out.println("Accepted connection from client: " + socket.getRemoteSocketAddress());
                     String message = reader.readLine();
-                    if (message != null)
+                    if (message != null) {
                         System.out.println("Server received message - Client said: " + message);
                         writer.write(message.toUpperCase());
+                        writer.flush(); // Important to flush the writer
+                    }
                 } catch (Exception e) {
                     System.out.println("Caught Exception in While Loop:");
                     throw e;
                 }
-
             }
         }
     }
