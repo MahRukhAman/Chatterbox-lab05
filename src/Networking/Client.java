@@ -23,8 +23,10 @@ public class Client {
 
         } catch (IOException e) {
             System.err.println("Error connecting to server: " + e.getMessage());
+            e.printStackTrace(); // Print stack trace for detailed error information
         }
     }
+
 
     public static void main(String[] args) {
         String serverAddress = "localhost";

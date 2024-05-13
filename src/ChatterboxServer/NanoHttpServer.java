@@ -1,4 +1,4 @@
-package Chatterbox;
+package ChatterboxServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import java.net.Socket;
 public class NanoHttpServer {
 
     public static void main(String[] args) throws IOException {
-        int port = 8005;
+        int port = 8000;
         if (args.length > 0)
             port = Integer.parseInt(args[0]);
 
