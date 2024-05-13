@@ -6,15 +6,15 @@ import java.net.Socket;
 
 public class Server {
 
-    private int port;
+    private final int port ;
 
     public Server(int port) {
         this.port = port;
     }
 
     public void startServer() {
-        try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("Server started on port " + port);
+        try (ServerSocket serverSocket = new ServerSocket(8000)) {
+            System.out.println("Server started on port " + 8000);
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Client connected: " + clientSocket.getInetAddress().getHostAddress());

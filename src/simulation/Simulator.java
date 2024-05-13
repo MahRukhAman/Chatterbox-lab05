@@ -6,6 +6,6 @@ public class Simulator {
         System.out.println("Simulation is running...");
     }
 
-    // Add more methods and fields here as needed
+    // more methods and fields
 
 }
