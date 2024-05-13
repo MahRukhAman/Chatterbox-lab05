@@ -3,11 +3,12 @@ package Networking;
 import java.io.*;
 import java.net.Socket;
 
-public class Client {    private int port;
+public class Client {
+    private int port;
     private String host;
     private static BufferedReader in;
-    private String serverAddress;
-    private int serverPort;
+    private final String serverAddress;
+    private final int serverPort;
 
     public Client(String serverAddress, int serverPort) {
         this.serverAddress = serverAddress;
