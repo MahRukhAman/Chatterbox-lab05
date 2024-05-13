@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * This example was taken from the Chapter "Netzwerkprogrammierung" of the Book
@@ -32,6 +33,10 @@ public class NanoHttpServer {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             while (true) {
                 System.out.println("NanoHTTPServer listening on port " + port);
+                Scanner scn = new Scanner(System.in);
+                if(scn.hasNext()) {
+                        System.out.println("Message: " + scn.nextLine());
+                }
                 try (Socket socket = serverSocket.accept();
                      InputStream input = socket.getInputStream();
                      BufferedReader reader = new BufferedReader(
